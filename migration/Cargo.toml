@@ -1,0 +1,21 @@
+[package]
+name = "migration"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "migration"
+path = "src/lib.rs"
+
+[dependencies]
+entity = { path = "../entity" }
+rocket = { version = "0.5.0-rc.1" }
+
+[dependencies.sea-orm-migration]
+version = "^0.8.0"
+features=["sqlx-postgres", "runtime-tokio-native-tls"]
+
+[dependencies.async-std]
+version = "^1"
+features = ["attributes", "tokio1"]
