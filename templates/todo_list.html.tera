@@ -1,0 +1,65 @@
+{% extends "base" %} {% block content %}
+<link rel="stylesheet" href="/todo_list.css" />
+<h1>Todo List</h1>
+{% if flash %}
+<p class="{{ flash.0 }}-flash">
+  {{ flash.1 }}
+</p>
+{% endif %}
+<table>
+    <colgroup>
+        <col class="medium">
+        <col class="wide">
+        <col class="medium">
+    </colgroup>
+    <tr>
+        <th>ID</th>
+        <th>Item</th>
+        <th>Actions</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.id }}</td>
+        <td class="item">{{ task.item }}</td>
+        <td >
+            <div class="actions">
+                <form action="/edit/{{ task.id }}" method="get">
+                    <button type="submit">Edit</button>
+                </form>
+                <form action="/deletetask/{{ task.id }}" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="page-row">
+    {% if current_page == 0 %}
+        {% set start_page = current_page + 1 %}
+    {% else %}
+        {% set start_page = current_page %}
+    {% endif %}
+
+    {% if start_page + 3 > number_of_pages %}
+        {% set end_page = number_of_pages + 1 %}
+    {% else %}
+        {% set end_page = start_page + 3 %}
+    {% endif %}
+
+    {% for i in range(start = start_page, end = end_page) %}
+        <a href="/?page={{ i - 1 }}" class="page-selector">{{ i }}<a>
+    {% endfor %}
+
+    {% if end_page <= number_of_pages %}
+        <a>...</a>
+    {% endif %}
+</div>
+<form action="/addtask" method="post">
+    <div class="add_task_form">
+        <input type="text" name="item" placeholder="Enter a new task here..." />
+        <button type="submit">Add Task</button>
+    </div>
+</form>
+{% endblock content %}

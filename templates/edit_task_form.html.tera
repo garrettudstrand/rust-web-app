@@ -1,0 +1,17 @@
+{% extends "base" %} {% block content %}
+<form action="/" method="get" class="back-button">
+    <button type="submit">Back</button>
+</form>
+<h1>Task - {{ task.id }}</h1>
+<form action="/edittask" method="post">
+    <input type="hidden" name="_method" value="put" />
+    <input type="hidden" name="id" value="{{ task.id }}" />
+
+    <label for="item">Item:</label>
+    <div class="item-input">
+        <input type="text" name="item" value="{{ task.item }}" />
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock content %}

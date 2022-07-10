@@ -1,2 +1,5 @@
+[default]
+template_dir = "templates/"
+
 [default.databases.todo]
 url = "postgres://postgres:password@localhost:5432/todo"
