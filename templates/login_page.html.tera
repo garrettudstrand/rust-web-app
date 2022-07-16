@@ -1,0 +1,21 @@
+{% extends "base" %} {% block content %}
+<link rel="stylesheet" href="/authorization.css" />
+<form action="/verifyaccount" method="post">
+    <div class="authorization-box">
+        {% if flash %}
+            <p class="{{ flash.0 }}-flash">
+                {{ flash.1 }}
+            </p>
+        {% endif %}
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="/signup">Signup here!</a></p>
+    </div>
+</form>
+{% endblock content %}

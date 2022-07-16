@@ -1,0 +1,44 @@
+.authorization-box  {
+    max-width: 500px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    padding: 2rem;
+}
+
+input {
+    border-radius: 0.25rem;
+    border-color: #ddd;
+    border-width: 1px;
+    padding: 10px 20px;
+    border-style: solid;
+    width: 100%;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+button {
+    padding: 10px 20px;
+    background: rgb(165, 0, 165);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    color: white;
+}
+
+button:hover {
+    background-color: purple;
+}

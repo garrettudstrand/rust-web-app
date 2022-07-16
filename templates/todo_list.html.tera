@@ -1,5 +1,7 @@
 {% extends "base" %} {% block content %}
-<link rel="stylesheet" href="/todo_list.css" />
+<form action="/logout" method="post">
+    <button type="submit">Log Out</button>
+</form>
 <h1>Todo List</h1>
 {% if flash %}
 <p class="{{ flash.0 }}-flash">

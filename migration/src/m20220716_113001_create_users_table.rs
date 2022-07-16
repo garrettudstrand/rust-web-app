@@ -1,12 +1,10 @@
 use sea_orm_migration::prelude::*;
 
-use crate::m20220716_113001_create_users_table::Users;
-
 pub struct Migration;
 
 impl MigrationName for Migration {
     fn name(&self) -> &str {
-        "m20220704_145355_create_tasks_table"
+        "m20220716_113001_create_users_table"
     }
 }
 
@@ -16,26 +14,17 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 sea_query::Table::create()
-                    .table(Tasks::Table)
+                    .table(Users::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Tasks::Id)
+                        ColumnDef::new(Users::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Tasks::Item).string().not_null())
-                    .col(ColumnDef::new(Tasks::UserId).integer().default(Value::Int(None)))
-                    .foreign_key(
-                        ForeignKey::create()
-                            .name("user_id")
-                            .from(Tasks::Table, Tasks::UserId)
-                            .to(Users::Table, Users::Id)
-                            .on_delete(ForeignKeyAction::Cascade)
-                            .on_update(ForeignKeyAction::Cascade)
-    
-                    )
+                    .col(ColumnDef::new(Users::Username).string().unique_key().not_null())
+                    .col(ColumnDef::new(Users::Password).string().not_null())
                     .to_owned()
             )
             .await
@@ -45,7 +34,7 @@ impl MigrationTrait for Migration {
         manager
             .drop_table(
                 sea_query::Table::drop()
-                    .table(Tasks::Table)
+                    .table(Users::Table)
                     .to_owned()
             )
             .await
@@ -53,9 +42,9 @@ impl MigrationTrait for Migration {
 }
 
 #[derive(Iden)]
-pub enum Tasks {
+pub enum Users {
     Table,
     Id,
-    Item,
-    UserId
+    Username,
+    Password
 }

@@ -12,10 +12,12 @@ members = [".", "entity", "migration"]
 async-trait = { version = "0.1" }
 entity = { path = "entity" }
 migration = { path = "migration" }
+rust-argon2 = "1.0"
+anyhow = "1.0"
 
 [dependencies.rocket]
 version = "0.5.0-rc.2"
-features = ["json"]
+features = ["json", "secrets"]
 
 [dependencies.rocket_dyn_templates]
 version = "0.1.0-rc.1"

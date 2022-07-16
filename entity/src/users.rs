@@ -3,36 +3,34 @@ use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Deserialize, Serialize, FromForm)]
 #[serde(crate = "rocket::serde")]
-#[sea_orm(table_name = "tasks")]
+#[sea_orm(table_name = "users")]
 pub struct Model {
     #[sea_orm(primary_key)]
     #[field(default = 0)]
     pub id: i32,
-    pub item: String,
-    #[field(default = 0)]
-    pub user_id: i32
+    pub username: String,
+    pub password: String
 }
 
 #[derive(Copy, Clone, Debug, EnumIter)]
 pub enum Relation {
-    Users
+    Tasks
 }
 
 impl RelationTrait for Relation {
     fn def(&self) -> RelationDef {
         match self {
-            Self::Users => Entity::belongs_to(super::users::Entity)
-                .from(Column::UserId)
-                .to(super::users::Column::Id)
-                .into(),
+            Self::Tasks => Entity::has_many(super::tasks::Entity).into(),
         }
     }
 }
 
-impl Related<super::users::Entity> for Entity {
+impl Related<super::tasks::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::Users.def()
+        Relation::Tasks.def()
     }
 }
+
+pub const USER_PASSWORD_SALT: &[u8] = b"some_random_salt";
 
 impl ActiveModelBehavior for ActiveModel {}
