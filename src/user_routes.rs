@@ -1,6 +1,6 @@
 use argon2::Config;
 use entity::users::{self, USER_PASSWORD_SALT};
-use rocket::{response::{Flash, Redirect}, http::{CookieJar, Cookie}, request::{FromRequest, Outcome}, Request};
+use rocket::{http::{Cookie, CookieJar, Status}, request::{FromRequest, Outcome}, response::{Flash, Redirect}, Request};
 use rocket::form::Form;
 use sea_orm::{Set, EntityTrait, QueryFilter, ColumnTrait, ActiveModelTrait};
 use sea_orm_rocket::Connection;
@@ -20,13 +20,13 @@ impl<'r> FromRequest<'r> for AuthenticatedUser {
         let cookies = req.cookies();
         let user_id_cookie = match get_user_id_cookie(cookies) {
             Some(result) => result,
-            None => return Outcome::Forward(())
+            None => return Outcome::Forward(Status::TemporaryRedirect)
         };
 
         let logged_in_user_id = match user_id_cookie.value()
             .parse::<i32>() {
                 Ok(result) => result,
-                Err(_err) => return Outcome::Forward(())
+                Err(_err) => return Outcome::Forward(Status::TemporaryRedirect)
             };
 
         return Outcome::Success(AuthenticatedUser { user_id: logged_in_user_id });
@@ -42,7 +42,7 @@ fn set_user_id_cookie(cookies: & CookieJar, user_id: i32) {
 }
 
 fn remove_user_id_cookie(cookies: & CookieJar) {
-    cookies.remove_private(Cookie::named("user_id"));
+    cookies.remove_private(Cookie::build("user_id"));
 }
 
 #[post("/logout")]
