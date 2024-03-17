@@ -10,12 +10,12 @@ path = "src/lib.rs"
 
 [dependencies]
 entity = { path = "../entity" }
-rocket = { version = "0.5.0-rc.1" }
+rocket = { version = "0.5.0" }
 
 [dependencies.sea-orm-migration]
-version = "^0.8.0"
+version = "0.12.15"
 features=["sqlx-postgres", "runtime-tokio-native-tls"]
 
 [dependencies.async-std]
-version = "^1"
+version = "1.12.0"
 features = ["attributes", "tokio1"]

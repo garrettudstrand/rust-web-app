@@ -20,7 +20,7 @@ fn rocket() -> _ {
         .attach(AdHoc::try_on_ignite("Migrations", run_migrations))
         .mount("/", FileServer::from(relative!("/public")))
         .mount("/", routes![
-            render_routes::index, 
+            render_routes::index,
             render_routes::index_redirect,
             render_routes::edit_task_page, 
             render_routes::edit_task_page_redirect,
@@ -34,7 +34,7 @@ fn rocket() -> _ {
             task_routes::delete_task_redirect,
             user_routes::create_account, 
             user_routes::verify_account,
-            user_routes::logout
+            user_routes::logout,
         ])
         .attach(Template::fairing())
 }

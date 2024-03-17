@@ -1,4 +1,4 @@
-use migration::tests_cfg::json;
+use rocket::serde::json::json;
 use rocket::{request::FlashMessage, response::{Redirect, self, Responder}, Request, http::Status};
 use rocket_dyn_templates::Template;
 use sea_orm::{EntityTrait, ColumnTrait, QueryFilter, QueryOrder, PaginatorTrait};
@@ -25,8 +25,8 @@ impl From<sea_orm::DbErr> for DatabaseError {
 #[get("/?<page>&<tasks_per_page>")]
 pub async fn index(conn: Connection<'_, Db>, flash: Option<FlashMessage<'_>>, page: Option<usize>, tasks_per_page: Option<usize>, user: AuthenticatedUser) -> Result<Template, DatabaseError> {
     let db = conn.into_inner();
-    let page = page.unwrap_or(0);
-    let tasks_per_page = tasks_per_page.unwrap_or(5);
+    let page: u64 = page.unwrap_or(0).try_into().unwrap();
+    let tasks_per_page: u64 = tasks_per_page.unwrap_or(5).try_into().unwrap();
 
     let paginator = Tasks::find()
                             .filter(tasks::Column::UserId.eq(user.user_id))

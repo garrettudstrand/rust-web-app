@@ -9,25 +9,25 @@ edition = "2021"
 members = [".", "entity", "migration"]
 
 [dependencies]
-async-trait = { version = "0.1" }
+async-trait = { version = "0.1.78" }
 entity = { path = "entity" }
 migration = { path = "migration" }
-rust-argon2 = "1.0"
-anyhow = "1.0"
+rust-argon2 = "2.1.0"
+anyhow = "1.0.81"
 
 [dependencies.rocket]
-version = "0.5.0-rc.2"
+version = "0.5.0"
 features = ["json", "secrets"]
 
 [dependencies.rocket_dyn_templates]
-version = "0.1.0-rc.1"
+version = "0.1.0"
 features = ["tera"]
 
 [dependencies.sea-orm-rocket]
 git = "https://github.com/SeaQL/sea-orm"
 
 [dependencies.sea-orm]
-version = "^0.8.0"
+version = "0.12.15"
 features = [
   "runtime-tokio-native-tls",
   "sqlx-postgres",
